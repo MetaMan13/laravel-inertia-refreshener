@@ -82,7 +82,7 @@ export default {
     },
     methods: {
         submit() {
-        this.$inertia.post('/dashboard/post', this.form)
+            this.$inertia.post('/dashboard/post', this.form)
         },
     },
 }

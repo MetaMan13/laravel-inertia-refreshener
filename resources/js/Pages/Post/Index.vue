@@ -59,8 +59,5 @@ export default {
     props: {
         posts: Object,
     },
-    created(){
-        console.log(this.posts)
-    }
 }
 </script>
