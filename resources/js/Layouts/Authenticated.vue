@@ -8,15 +8,19 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('dashboard.index')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <BreezeNavLink :href="route('dashboard.index')" :active="route().current('dashboard.index')">
                                     Dashboard
+                                </BreezeNavLink>
+
+                                <BreezeNavLink :href="route('dashboard.post.index')" :active="route().current('dashboard.post.index')">
+                                    Posts
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -61,7 +65,7 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <BreezeResponsiveNavLink :href="route('dashboard.index')" :active="route().current('dashboard.index')">
                             Dashboard
                         </BreezeResponsiveNavLink>
                     </div>
