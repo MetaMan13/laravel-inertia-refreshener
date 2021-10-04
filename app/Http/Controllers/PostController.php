@@ -14,7 +14,11 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Post/Index');
+        $posts = Post::all();
+
+        return Inertia::render('Post/Index', [
+            'posts' => $posts
+        ]);
     }
 
     public function create()
@@ -28,12 +32,14 @@ class PostController extends Controller
 
         Post::create($data);
 
-        return redirect()->route('dashboard.post.index')->with('post_created', 'Post created!');
+        return redirect()->route('dashboard.post.index')->with('message', 'Post created!');
     }
 
-    public function show()
+    public function show(Post $post)
     {
-        return Inertia::render('Post/Show');
+        return Inertia::render('Post/Show', [
+            'post' => $post
+        ]);
     }
 
     public function edit(EditRequest $request, Post $post)

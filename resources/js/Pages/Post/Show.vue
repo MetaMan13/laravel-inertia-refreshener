@@ -14,6 +14,11 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         Post Show
                     </div>
+
+                    <div>
+                        {{ post.id }}
+                        {{ post.title }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,5 +34,8 @@ export default {
         BreezeAuthenticatedLayout,
         Head,
     },
+    props: {
+        post: Object
+    }
 }
 </script>
