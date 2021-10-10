@@ -27,17 +27,26 @@
                         </div>
                     </div>
 
-                    <div v-for="post in posts" v-bind:key="post.id" class="p-6 bg-white border-b border-gray-200 flex flex-col">
+                    <div v-for="post in posts" v-bind:key="post.id" class="p-6 bg-white border-b border-gray-200 flex flex-row justify-between">
+                        <!-- Post Content -->
                         <div>
-                            <Link :href="route('dashboard.post.show', [post.id])">
-                                Post Title: {{ post.title }}
-                            </Link>
+                            <div>
+                                Post Title: <Link :href="route('dashboard.post.show', [post.id])" class="hover:text-blue-600 hover:underline">{{ post.title }}</Link>
+                            </div>
+
+                            <div>
+                                <p>
+                                    Post Body: {{ post.body }}
+                                </p>
+                            </div>
                         </div>
 
-                        <div>
-                            <p>
-                                Post Body: {{ post.body }}
-                            </p>
+                        <!-- Post Crud Buttons -->
+                        <div class="flex flex-row gap-4 items-start">
+                            <Link :href="route('dashboard.post.edit', [post.id])" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">Edit Post</Link>
+                            <form @submit.prevent="deletePost(post)">
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">Delete Post</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -49,6 +58,8 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import axios from 'axios';
+import forms from '@tailwindcss/forms';
 
 export default {
     components: {
@@ -59,5 +70,11 @@ export default {
     props: {
         posts: Object,
     },
+    methods: {
+        deletePost(post)
+        {
+            this.$inertia.delete('/dashboard/post/' + post.id, {_token: this.$page.csrf_token})
+        }
+    }
 }
 </script>

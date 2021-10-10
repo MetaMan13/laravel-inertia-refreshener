@@ -30,9 +30,9 @@ class PostController extends Controller
     {
         $data = collect($request->validated())->put('user_id', auth()->user()->id)->all();
 
-        Post::create($data);
+        $post = Post::create($data);
 
-        return redirect()->route('dashboard.post.index')->with('message', 'Post created!');
+        return redirect()->route('dashboard.post.show', ['post' => $post])->with('message', 'Post created!');
     }
 
     public function show(Post $post)
@@ -44,16 +44,22 @@ class PostController extends Controller
 
     public function edit(EditRequest $request, Post $post)
     {
-        return Inertia::render('Post/Edit');
+        return Inertia::render('Post/Edit', [
+            'post' => $post
+        ]);
     }
 
     public function update(UpdateRequest $request, Post $post)
     {
+        $post->update($request->validated());
 
+        return redirect()->route('dashboard.post.show', ['post' => $post])->with('message', 'Post updated');
     }
 
     public function destroy(DestroyRequest $request, Post $post)
     {
+        $post->delete();
 
+        return redirect()->route('dashboard.post.index')->with('message', 'Post deleted!');
     }
 }
