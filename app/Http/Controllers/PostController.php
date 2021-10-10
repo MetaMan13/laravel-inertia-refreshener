@@ -9,6 +9,7 @@ use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\EditRequest;
 use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Requests\Post\DestroyRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
@@ -28,11 +29,15 @@ class PostController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $data = collect($request->validated())->put('user_id', auth()->user()->id)->all();
+        $data = collect($request->validated())
+            ->put('user_id', auth()->user()->id)
+            ->all();
 
         $post = Post::create($data);
 
-        return redirect()->route('dashboard.post.show', ['post' => $post])->with('message', 'Post created!');
+        return redirect()
+            ->route('dashboard.post.show', ['post' => $post])
+            ->with('message', 'Post created!');
     }
 
     public function show(Post $post)
@@ -53,13 +58,17 @@ class PostController extends Controller
     {
         $post->update($request->validated());
 
-        return redirect()->route('dashboard.post.show', ['post' => $post])->with('message', 'Post updated');
+        return redirect()
+            ->route('dashboard.post.show', ['post' => $post])
+            ->with('message', 'Post updated');
     }
 
     public function destroy(DestroyRequest $request, Post $post)
     {
         $post->delete();
 
-        return redirect()->route('dashboard.post.index')->with('message', 'Post deleted!');
+        return redirect()
+            ->route('dashboard.post.index')
+            ->with('message', 'Post deleted!');
     }
 }
